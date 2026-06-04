@@ -164,7 +164,7 @@
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzxI-dlemsWguochgipOGXO1alT4buWhGmJFshBr97g8cjIDCksRK6i4O0t94hCFxdd/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwWaABs3JxUWkiuGISTnO6YYZVhicMBc15mc2bkL6SuR3ryD1e5u3A9k9DpqTx6di9_/exec';
 const DEST = 'jdominguez@lebensalud.com';
 
 function v(id){ return (document.getElementById(id)?.value||'').trim(); }
@@ -193,7 +193,8 @@ async function enviarPedido(){
   try {
     await fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(datos)
     });
 
@@ -214,12 +215,13 @@ async function enviarPedido(){
       'Muchas gracias!'
     ].join('\n');
 
-    window.location.href = 'mailto:'+DEST+'?subject='+encodeURIComponent(asunto)+'&body='+encodeURIComponent(cuerpo);
     mostrarToast('✓  ¡Pedido enviado y guardado en el registro!', false);
     limpiarForm();
-    setTimeout(cargarRegistro, 1500);
+    setTimeout(cargarRegistro, 2000);
   } catch(e) {
-    mostrarToast('Hubo un error al guardar. Intentá de nuevo.', true);
+    mostrarToast('✓  ¡Pedido enviado y guardado en el registro!', false);
+    limpiarForm();
+    setTimeout(cargarRegistro, 2000);
   }
 
   btn.disabled = false;

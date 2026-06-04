@@ -1,0 +1,289 @@
+[pedidos-busqueda-gruposchroeder (11).html](https://github.com/user-attachments/files/28600302/pedidos-busqueda-gruposchroeder.11.html)
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitud de aviso de búsqueda — Grupo Schroeder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F2;
+    --surface: #FFFFFF;
+    --border: #E2DED8;
+    --text: #1A1A1A;
+    --muted: #7A7672;
+    --accent: #2D6A4F;
+    --accent-light: #E8F3EE;
+    --accent-muted: #4D8A6A;
+    --warn: #92610A;
+    --warn-bg: #FDF3E3;
+    --info: #1A4D8C;
+    --info-bg: #EBF2FB;
+    --success: #1A6035;
+    --success-bg: #E8F5EE;
+    --danger: #8C1A1A;
+    --danger-bg: #FBEBEB;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2.5rem 1rem 4rem;
+  }
+  .page { max-width: 640px; margin: 0 auto; }
+  header { margin-bottom: 2.5rem; }
+  .org { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  header h1 { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; line-height: 1.2; color: var(--text); margin-bottom: 6px; }
+  header p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+  .form-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.25rem; }
+  .section-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; font-weight: 500; }
+  .field { margin-bottom: 1.1rem; }
+  .field:last-child { margin-bottom: 0; }
+  .field label { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+  .field label .req { color: var(--accent); margin-left: 2px; }
+  .field label .hint { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 6px; }
+  .field input, .field textarea {
+    width: 100%; padding: 10px 13px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: var(--bg); color: var(--text);
+    transition: border-color .15s, background .15s;
+    line-height: 1.5;
+  }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .field input::placeholder, .field textarea::placeholder { color: #B0ACA8; }
+  .btn-enviar {
+    width: 100%; padding: 13px;
+    font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif;
+    background: var(--accent); color: #fff; border: none;
+    border-radius: var(--radius-sm); cursor: pointer;
+    transition: background .15s, transform .1s;
+  }
+  .btn-enviar:hover { background: var(--accent-muted); }
+  .btn-enviar:active { transform: scale(0.99); }
+  .btn-enviar:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .toast {
+    display: none; margin-top: .75rem; padding: 10px 14px;
+    background: var(--success-bg); border: 1px solid #A8D5BC;
+    border-radius: var(--radius-sm); font-size: 13px; color: var(--success);
+  }
+  .toast.error { background: var(--danger-bg); border-color: #DFA8A8; color: var(--danger); }
+  .reg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .reg-header h2 { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; }
+  .count-badge { font-size: 11px; padding: 3px 10px; border-radius: 99px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 10px; transition: border-color .15s; }
+  .card:hover { border-color: #C8C4BE; }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+  .card-puesto { font-size: 15px; font-weight: 500; color: var(--text); }
+  .card-meta { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .estado { font-size: 11px; padding: 3px 10px; border-radius: 99px; border: 1px solid; white-space: nowrap; flex-shrink: 0; }
+  .estado.pendiente { background: var(--warn-bg); color: var(--warn); border-color: #E8C47A; }
+  .estado.proceso { background: var(--info-bg); color: var(--info); border-color: #9ABDE8; }
+  .estado.listo { background: var(--success-bg); color: var(--success); border-color: #7DC4A0; }
+  .card-row { font-size: 13px; color: var(--muted); margin-bottom: 4px; line-height: 1.5; }
+  .card-row span { color: var(--text); }
+  .card-obs { font-size: 12px; color: var(--muted); margin-top: 6px; padding: 8px 10px; background: var(--bg); border-radius: var(--radius-sm); line-height: 1.5; }
+  .card-actions { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+  .btn-sm { font-size: 12px; padding: 5px 12px; cursor: pointer; background: transparent; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--muted); font-family: 'DM Sans', sans-serif; transition: all .15s; }
+  .btn-sm:hover { background: var(--bg); border-color: #C8C4BE; color: var(--text); }
+  .btn-sm.danger:hover { background: var(--danger-bg); color: var(--danger); border-color: #DFA8A8; }
+  .empty { font-size: 13px; color: var(--muted); text-align: center; padding: 2rem 0; }
+  .loading { font-size: 13px; color: var(--muted); text-align: center; padding: 1.5rem 0; }
+  footer { margin-top: 3rem; text-align: center; font-size: 12px; color: #C0BDB9; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <p class="org">Grupo Schroeder — Comunicación Interna</p>
+    <h1>Solicitud de aviso<br>de búsqueda externa</h1>
+    <p>Completá el formulario y el pedido llegará automáticamente a Comunicación Interna.</p>
+  </header>
+
+  <div class="form-section">
+    <p class="section-label">Datos del puesto</p>
+    <div class="field">
+      <label>Nombre del puesto <span class="req">*</span></label>
+      <input type="text" id="f-puesto" placeholder="Ej: Analista Contable SR" />
+    </div>
+    <div class="field">
+      <label>Lugar de trabajo <span class="req">*</span></label>
+      <input type="text" id="f-lugar" placeholder="Ej: Neuquén capital — Sede Central" />
+    </div>
+    <div class="field">
+      <label>Requisitos</label>
+      <textarea id="f-requisitos" placeholder="Formación, experiencia, conocimientos técnicos..."></textarea>
+    </div>
+    <div class="field">
+      <label>Tareas</label>
+      <textarea id="f-tareas" placeholder="Principales responsabilidades del puesto..."></textarea>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <p class="section-label">Datos del envío</p>
+    <div class="field">
+      <label>Asunto del mail <span class="hint">— se usará como asunto del correo</span></label>
+      <input type="text" id="f-asunto" placeholder="Ej: Búsqueda externa — Analista Contable SR" />
+    </div>
+    <div class="field">
+      <label>Observaciones</label>
+      <textarea id="f-obs" placeholder="Fecha límite, urgencia, portal de publicación, aclaraciones..." style="min-height:60px"></textarea>
+    </div>
+    <div class="field">
+      <label>Tu nombre y área</label>
+      <input type="text" id="f-remitente" placeholder="Ej: María González — Empleos" />
+    </div>
+  </div>
+
+  <button class="btn-enviar" id="btn-enviar" onclick="enviarPedido()">Enviar pedido a Comunicación Interna →</button>
+  <div class="toast" id="toast"></div>
+
+  <div class="divider"></div>
+
+  <div class="reg-header">
+    <h2>Registro de pedidos</h2>
+    <span class="count-badge" id="badge-count">—</span>
+  </div>
+  <div id="registro-lista"><p class="loading">Cargando registro...</p></div>
+
+  <footer>Grupo Schroeder · Comunicación Interna</footer>
+</div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwgDyqT18HZ5k5TWICmX0AtjM2oilESeevqlmknO2_MbcrNiIh-_7FHkhiVHbWDSnuk/exec';
+const DEST = 'jdominguez@lebensalud.com';
+
+function v(id){ return (document.getElementById(id)?.value||'').trim(); }
+
+async function enviarPedido(){
+  const puesto = v('f-puesto'), lugar = v('f-lugar');
+  if(!puesto||!lugar){ alert('Por favor completá al menos el nombre del puesto y el lugar de trabajo.'); return; }
+
+  const btn = document.getElementById('btn-enviar');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const fecha = new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const asunto = v('f-asunto') || ('Solicitud aviso búsqueda — ' + puesto);
+  const datos = {
+    fecha, puesto, lugar,
+    requisitos: v('f-requisitos'),
+    tareas: v('f-tareas'),
+    asunto,
+    obs: v('f-obs'),
+    remitente: v('f-remitente'),
+    estado: 'pendiente'
+  };
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+
+    const cuerpo = [
+      'Hola,',
+      '',
+      'Te envío los datos para el aviso de búsqueda externa:',
+      '',
+      'NOMBRE DEL PUESTO: ' + puesto,
+      'LUGAR DE TRABAJO: ' + lugar,
+      'REQUISITOS: ' + (datos.requisitos||'—'),
+      'TAREAS: ' + (datos.tareas||'—'),
+      'OBSERVACIONES: ' + (datos.obs||'—'),
+      '',
+      'Remitente: ' + (datos.remitente||'No especificado'),
+      '',
+      'Muchas gracias!'
+    ].join('\n');
+
+    window.location.href = 'mailto:'+DEST+'?subject='+encodeURIComponent(asunto)+'&body='+encodeURIComponent(cuerpo);
+    mostrarToast('✓  ¡Pedido enviado y guardado en el registro!', false);
+    limpiarForm();
+    setTimeout(cargarRegistro, 1500);
+  } catch(e) {
+    mostrarToast('Hubo un error al guardar. Intentá de nuevo.', true);
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Enviar pedido a Comunicación Interna →';
+}
+
+function mostrarToast(msg, esError){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (esError ? ' error' : '');
+  t.style.display = 'block';
+  setTimeout(()=>{ t.style.display='none'; }, 4000);
+}
+
+function limpiarForm(){
+  ['f-puesto','f-lugar','f-requisitos','f-tareas','f-asunto','f-obs','f-remitente']
+    .forEach(id => { document.getElementById(id).value=''; });
+}
+
+function estadoLabel(e){ return {pendiente:'Pendiente',proceso:'En proceso',listo:'Aviso listo'}[e]||e; }
+
+async function cargarRegistro(){
+  try {
+    const res = await fetch(SCRIPT_URL);
+    const data = await res.json();
+    renderRegistro(data);
+  } catch(e) {
+    document.getElementById('registro-lista').innerHTML = '<p class="empty">No se pudo cargar el registro.</p>';
+    document.getElementById('badge-count').textContent = '—';
+  }
+}
+
+function formatFecha(f){
+  if(!f) return '';
+  const d = new Date(f);
+  if(isNaN(d)) return f;
+  return d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+}
+
+function renderRegistro(pedidos){
+  const lista = document.getElementById('registro-lista');
+  document.getElementById('badge-count').textContent = pedidos.length + (pedidos.length===1?' pedido':' pedidos');
+  if(!pedidos.length){ lista.innerHTML='<p class="empty">Todavía no hay pedidos guardados.</p>'; return; }
+  lista.innerHTML = pedidos.slice().reverse().map((p,i)=>`
+    <div class="card">
+      <div class="card-top">
+        <div>
+          <div class="card-puesto">${p.puesto||'—'}</div>
+          <div class="card-meta">${formatFecha(p.fecha)} · ${p.remitente||'Sin remitente'}</div>
+        </div>
+        <span class="estado ${p.estado||'pendiente'}">${estadoLabel(p.estado||'pendiente')}</span>
+      </div>
+      ${p.lugar?`<div class="card-row">📍 <span>${p.lugar}</span></div>`:''}
+      ${p.obs?`<div class="card-obs">${p.obs}</div>`:''}
+      <div class="card-actions">
+        <button class="btn-sm" onclick="reenviarMail(${pedidos.length-1-i})">Reenviar mail</button>
+      </div>
+    </div>`).join('');
+  window._pedidos = pedidos;
+}
+
+function reenviarMail(idx){
+  const p = (window._pedidos||[])[idx];
+  if(!p) return;
+  const cuerpo = ['Hola,','','Te reenvío los datos para el aviso de búsqueda externa:','','NOMBRE DEL PUESTO: '+p.puesto,'LUGAR DE TRABAJO: '+p.lugar,'REQUISITOS: '+(p.requisitos||'—'),'TAREAS: '+(p.tareas||'—'),'OBSERVACIONES: '+(p.obs||'—'),'','Remitente: '+(p.remitente||'No especificado')].join('\n');
+  window.location.href = 'mailto:'+DEST+'?subject='+encodeURIComponent(p.asunto||'Solicitud aviso búsqueda — '+p.puesto)+'&body='+encodeURIComponent(cuerpo);
+}
+
+cargarRegistro();
+</script>
+</body>
+</html>
